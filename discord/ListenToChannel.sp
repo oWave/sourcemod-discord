@@ -63,6 +63,12 @@ public int OnGetMessage(Handle request, bool failure, int offset, int statuscode
 			delete request;
 			return;
 		}
+		if (statuscode == 0) {
+			LogError("[DISCORD] Couldn't Retrieve Messages - statuscode is 0, retrying");
+			GetMessages(view_as<Handle>(dp));
+			delete request;
+			return;
+		}
 		LogError("[DISCORD] Couldn't Retrieve Messages - Fail %i %i", failure, statuscode);
 		delete request;
 		Handle fwd = view_as<Handle>(JsonObjectGetInt(view_as<Handle>(dp), "callback"));
