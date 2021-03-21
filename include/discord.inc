@@ -93,7 +93,7 @@ methodmap RoleList < Handle {
     "discriminator": "1337",
     "avatar": "8342729096ea3675442027381ff50dfe",
     "verified": true,
-    "email": "nelly@discordapp.com"
+    "email": "nelly@discord.com"
 }
  */
 //It's a JSON Handle with the above info TODO stop using natives!
@@ -139,3 +139,48 @@ methodmap DiscordMessage < Handle {
 #include <discord/webhook>
 #include <discord/bot>
 #include <discord/GuildMember>
+
+public SharedPlugin __pl_discordapi =
+{
+	name = "discord-api",
+	file = "discord-api.smx",
+	#if defined REQUIRE_PLUGIN
+	required = 1,
+	#else
+	required = 0,
+	#endif
+};
+
+#if !defined REQUIRE_PLUGIN
+public void __pl_discordapi_SetNTVOptional()
+{
+	MarkNativeAsOptional("DiscordUser.GetID");
+	MarkNativeAsOptional("DiscordUser.GetUsername");
+	MarkNativeAsOptional("DiscordUser.GetDiscriminator");
+	MarkNativeAsOptional("DiscordUser.GetAvatar");
+	MarkNativeAsOptional("DiscordUser.IsVerified");
+	MarkNativeAsOptional("DiscordUser.GetEmail");
+	MarkNativeAsOptional("DiscordUser.IsBot");
+	MarkNativeAsOptional("DiscordMessage.GetID");
+	MarkNativeAsOptional("DiscordMessage.IsPinned");
+	MarkNativeAsOptional("DiscordMessage.DiscordUser GetAuthor");
+	MarkNativeAsOptional("DiscordMessage.GetContent");
+	MarkNativeAsOptional("DiscordMessage.GetChannelID");
+	MarkNativeAsOptional("DiscordBot.StartTimer");
+	MarkNativeAsOptional("DiscordBot.AddReactionID");
+	MarkNativeAsOptional("DiscordBot.DeleteReactionID");
+	MarkNativeAsOptional("DiscordBot.GetReactionID");
+	MarkNativeAsOptional("DiscordBot.GetToken");
+	MarkNativeAsOptional("DiscordBot.SendMessage");
+	MarkNativeAsOptional("DiscordBot.SendMessageToChannelID");
+	MarkNativeAsOptional("DiscordBot.DeleteMessageID");
+	MarkNativeAsOptional("DiscordBot.DeleteMessage");
+	MarkNativeAsOptional("DiscordBot.GetGuilds");
+	MarkNativeAsOptional("DiscordBot.GetGuildChannels");
+	MarkNativeAsOptional("DiscordBot.GetGuildMembers");
+	MarkNativeAsOptional("DiscordBot.GetGuildMembersAll");
+	MarkNativeAsOptional("DiscordBot.GetGuildRoles");
+	MarkNativeAsOptional("DiscordChannel.SendMessage");
+	MarkNativeAsOptional("DiscordWebHook.Send");
+}
+#endif
