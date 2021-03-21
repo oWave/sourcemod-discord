@@ -64,6 +64,14 @@ static void SendMessage(DiscordBot bot, char[] channel, char[] message, Handle f
 	
 	json_object_set_new(hJson, "content", json_string(message));
 	
+	// Completly disable pings
+	// No allowed_mentions in request = Discord will parse message for pings
+	// Empty = No auto parsing -> No pings
+	Handle hJsonInner = json_object();
+	Handle hEmptyArray = json_array();
+	json_object_set_new(hJsonInner, "parse", hEmptyArray);
+	json_object_set_new(hJson, "allowed_mentions", hJsonInner);
+	
 	char url[64];
 	FormatEx(url, sizeof(url), "channels/%s/messages", channel);
 	
